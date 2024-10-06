@@ -24,7 +24,6 @@ public class SoundManager : MonoBehaviour
 
     void Awake()
     {
-        // Singleton pattern
         if (Instance == null)
         {
             Instance = this;
@@ -38,10 +37,8 @@ public class SoundManager : MonoBehaviour
 
         SettingsManager.MusicVolume = 0.5f;
 
-        // Update volume settings on awake
         UpdateVolume();
 
-        // Listen for changes in settings
         SettingsManager.OnSettingsChanged += UpdateVolume;
     }
 
@@ -84,14 +81,11 @@ public class SoundManager : MonoBehaviour
 
         if (music != null)
         {
-            // Stop any ongoing music coroutines to prevent overlapping
             if (musicCoroutine != null)
             {
                 StopCoroutine(musicCoroutine);
             }
 
-            // If music is currently playing, fade out the current track and fade in the new one.
-            // Otherwise, just fade in the new track.
             if (musicSource.isPlaying)
             {
                 musicCoroutine = StartCoroutine(FadeSwapTracks(musicSource, music.clip, fadeTime));
@@ -121,10 +115,8 @@ public class SoundManager : MonoBehaviour
 
     private IEnumerator FadeSwapTracks(AudioSource source, AudioClip newClip, float fadeTime)
     {
-        // Fade out
         yield return StartCoroutine(FadeOut(source, fadeTime));
 
-        // Swap and fade in
         source.clip = newClip;
         source.Play();
         yield return StartCoroutine(FadeIn(source, fadeTime));

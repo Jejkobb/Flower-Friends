@@ -26,13 +26,10 @@ public class NPCBehavior : MonoBehaviour
 
     private IEnumerator PlayFootstepWithDelay()
     {
-        // Generate a random delay between minDelay and maxDelay
         float randomDelay = UnityEngine.Random.Range(0f, 0.1f);
 
-        // Wait for the random delay
         yield return new WaitForSeconds(randomDelay);
 
-        // Play the footstep sound after the delay
         Broadcaster.Broadcast("PlaySFX", "step");
     }
 
